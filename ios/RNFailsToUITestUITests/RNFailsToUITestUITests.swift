@@ -17,7 +17,9 @@ class RNFailsToUITestUITests: XCTestCase {
         continueAfterFailure = false
 
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
+        let app = XCUIApplication()
+        setupSnapshot(app)
+        app.launch()
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
@@ -28,9 +30,12 @@ class RNFailsToUITestUITests: XCTestCase {
 
     func testExample() {
       XCUIApplication().otherElements["BTN2"].waitForExistence(timeout: 30)
+      snapshot("01Launch")
       XCUIApplication().otherElements["BTN2"].tap()
+      snapshot("02BTN2State")
       sleep(1)
       XCUIApplication().otherElements["BTN1"].tap()
+      snapshot("03BTN1State")
       sleep(1)
       XCUIApplication().otherElements["BTN2"].tap()
       sleep(1)

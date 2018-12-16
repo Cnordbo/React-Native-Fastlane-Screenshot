@@ -1,19 +1,58 @@
-## React Native UI Test Failure replication
-This is a simple demo project to show how the xCode Automated UI Test fails when using React native. 
+# How to Screenshot with fastlane using React Native
 
-### Boilerplate
-The application has been created using `react-native init`. 
-After that, its just been added a few buttons to `App.js`. Nothing more. 
+## Setup
+Follow the setup guide on [fastlanes website](https://docs.fastlane.tools/getting-started/ios/screenshots/)
 
-### Install
-1) Run `Yarn install` or `Npm Install`
-- Run `react-native run-ios` if you want to test that the application is working. 
+# Further actions
+1) Open xCode -> Product -> Scheme -> Edit Sceme
+2) (optional) In all windows, select (Release) as build configuration (not needed, but helps you avoid yellow box warnings during screenshots)
+3) Make sure Executable is set to your app
+4) Under "Build" - De-select "parallelize build"
+5) Under "Build" - Make sure "Test" and "Run" is selected for the test target. 
+5) Close the Schema Window
+6) Select your root project -> Select your UI Test Target -> Build Phases -> expand "Target dependencies"
+7) Add "React" as a target dependency. 
 
-### Reproduce: 
-1) Open ios/RNFailsToUITest.xcodeproj
-2) Open `RNFailsToUITestUITests\RNFailsToUITestUITests.swift`
-3) Put the cursor in `testExample()` and press "Record" on the bottom of the interface. 
-4) Wait for Simulator to launch and try clicking around. 
+Setup your screenshot procedure (see below) - and run `fastlane snapshot`. 
 
-Error: 
-<img src="Screenshot.png" />
+# Tip
+If you have not already done so, move your Fastlane files into `/fastlane` folder, fastlane will automatically look for supported files here, and helps your keep your project organized. 
+
+# How to write screenshot procedure. 
+Give the elements you want to tap a `testID="<yourID>"`
+
+Ex.
+```jsx
+<TouchableOpacity testID="BTN2" onPress={() => {}}>
+  <Text>Touch me</Text>
+</TouchableOpacity>
+```
+
+(HARD) In your testfile, where you normally record - You can try the recorder, but be very carefull of the points your touching - Its very picky that way. 
+
+(EASIER) I think its easier to be explicit about it - TouchableOpacity seems to allways show up in "otherElements" no matter how deep its nested: 
+```swift
+// Helps us not to continue before react has compiled its stuff and actually loaded the application
+XCUIApplication().otherElements["BTN2"].waitForExistence(timeout: 30) 
+ //Take the screenshot and give it a name of "01Launch"
+snapshot("01Launch")
+// Tap the element with testID="BTN2"
+XCUIApplication().otherElements["BTN2"].tap()
+snapshot("02BTN2State")
+// Wait 1 second before continuing
+sleep(1)
+XCUIApplication().otherElements["BTN1"].tap()
+snapshot("03BTN1State")
+```
+
+## Testing tips: 
+Dynamic content? Set your `testID=´MyContent_${index}´`
+
+
+
+# To be figgured out
+* Fastlane complains about not installed languages and defaults to system default. 
+* Simulator gets erased everytime, makes it hard to use asyncStorage and setting up testdata. (even if `erase_simluator = false`)
+
+# Contribute
+If you find anything worthy of a mention, submit a PR or create an issue. 
