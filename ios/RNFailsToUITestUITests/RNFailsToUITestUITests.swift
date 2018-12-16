@@ -27,6 +27,15 @@ class RNFailsToUITestUITests: XCTestCase {
     }
 
     func testExample() {
+      XCUIApplication().otherElements["BTN2"].waitForExistence(timeout: 30)
+      XCUIApplication().otherElements["BTN2"].tap()
+      sleep(1)
+      XCUIApplication().otherElements["BTN1"].tap()
+      sleep(1)
+      XCUIApplication().otherElements["BTN2"].tap()
+      sleep(1)
+      XCUIApplication().otherElements["BTN1"].tap()
+      sleep(1)
       
     }
 
