@@ -1,4 +1,4 @@
-# How to Screenshot with fastlane using React Native
+# How to take Screenshots with fastlane using React Native
 
 ## Setup
 Follow the setup guide on [fastlanes website](https://docs.fastlane.tools/getting-started/ios/screenshots/)
@@ -16,7 +16,7 @@ Follow the setup guide on [fastlanes website](https://docs.fastlane.tools/gettin
 Setup your screenshot procedure (see below) - and run `fastlane snapshot`. 
 
 # Tip
-If you have not already done so, move your Fastlane files into `/fastlane` folder, fastlane will automatically look for supported files here, and helps your keep your project organized. 
+If you have not already done so, move your Fastlane files into `/fastlane` folder, fastlane will automatically look for supported files here, and helps you keep your project organized. 
 
 # How to write screenshot procedure. 
 Give the elements you want to tap a `testID="<yourID>"`
