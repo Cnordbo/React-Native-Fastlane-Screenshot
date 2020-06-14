@@ -12,6 +12,7 @@ Follow the setup guide on [fastlanes website](https://docs.fastlane.tools/gettin
 5) Close the Schema Window
 6) Select your root project -> Select your UI Test Target -> Build Phases -> expand "Target dependencies"
 7) Add "React" as a target dependency. 
+8) Change the test target's iOS development target from iOS 13.4 to iOS 9.0.
 
 Setup your screenshot procedure (see below) - and run `fastlane snapshot`. 
 
